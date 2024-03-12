@@ -1,3 +1,15 @@
+# csv files
+*.csv
+
+# jpg files
+*.jpg
+
+# h5 files
+*.h5
+
+# env
+.env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
