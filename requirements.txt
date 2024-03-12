@@ -1,2 +1,3 @@
 Flask
 Gunicorn
+tensorflow==2.12.0rc0
