@@ -14,9 +14,10 @@ url = random.choice(bird_images)
 def hello_world():
     return 'Hello World!'
 
-@app.route('/bird')
+@app.route('/bird', methods==['POST'])
 def bird_images(): 
-    species_name = bird_recognition.get_species(url)
-    print(f'This is the species name! {species_name}')
-    return species_name
+    if request.method == 'POST':
+        species_name = bird_recognition.get_species(url)
+        print(f'This is the species name! {species_name}')
+        return species_name
     
