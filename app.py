@@ -16,7 +16,8 @@ def hello_world():
 
 @app.route('/bird')
 def bird_images():
+    return 'Hello, World!'
         
-    species_name = bird_recognition.get_species(url)
-    print(f'This is the species name! {species_name}')
-    return species_name
+    # species_name = bird_recognition.get_species(url)
+    # print(f'This is the species name! {species_name}')
+    # return species_name
