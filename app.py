@@ -19,3 +19,4 @@ def bird_images():
     species_name = bird_recognition.get_species(url)
     print(f'This is the species name! {species_name}')
     return species_name
+    
