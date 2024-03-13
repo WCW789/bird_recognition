@@ -25,7 +25,7 @@ def get_species(url):
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 # Get answer
-    with open(os.environ['BIRD_PATH'], "r") as file:
+    with open(os.environ['ANSWERS_PATH'], "r") as file:
         df1 = csv.reader(file)
 
         for row in df1:
