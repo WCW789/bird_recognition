@@ -3,3 +3,4 @@ Gunicorn
 tensorflow==2.12.0rc0
 opencv-python
 pandas
+dotenv
