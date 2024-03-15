@@ -7,6 +7,8 @@ import csv
 import numpy as np
 import pandas as pd
 import random
+from keras.preprocessing import image
+from tensorflow.keras.applications import MobileNetV3Large
  
 import os
 from dotenv import load_dotenv
@@ -24,32 +26,16 @@ def get_species(url):
     img = cv2.resize(img, (224,224))
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-# Get answer
-    with open(os.environ['ANSWERS_PATH'], "r") as file:
-        df1 = csv.reader(file)
+    model = MobileNetV3Large(weights='imagenet')
 
-        for row in df1:
-            if row[0] == url:
-                bird_name = row[1]
-                print(f"Actual Bird: {bird_name}")
+    input_img = image.img_to_array(img)
+    input_img = np.expand_dims(input_img, axis=0)
+    input_img = tf.keras.applications.mobilenet_v3.preprocess_input(input_img)
 
-
-    img_exp = np.expand_dims(img, axis=0)
-    model_path = os.environ['MODEL_PATH']
-
-    model_loaded = keras.models.load_model(model_path, custom_objects={'F1_score':'F1_score'})
-    prediction_bird = model_loaded.predict(img_exp)
-
-    index = np.argmax(prediction_bird)
-    print (f'The predict class index is {index}')
+    predict_img = model.predict(input_img)
 
     # Get prediction
-    csvpath2 = os.environ['BIRD_PATH']
-    df2 = pd.read_csv(csvpath2)
-
-    klass_filter = df2['class id'] == index
-    index_df = df2[klass_filter]
-    row_0 = index_df.iloc[0]
-    species = row_0['labels']
-    print(f'Prediction: {species}')
-    return species
+    top_prediction = tf.keras.applications.mobilenet_v3.decode_predictions(predict_img, top=1)
+    bird_name = top_prediction[0][0][1]
+    print(f'Prediction: {bird_name}')
+    return bird_name
