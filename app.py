@@ -18,11 +18,7 @@ def bird_images():
     if request.method == 'POST':
         data = request.get_json()
 
-        if 'url' in data and 'token' in data:
-            token = data['token']
-            if token != os.environ['TOKEN']:
-                return jsonify({'error': 'Invalid.'}), 400
-            
+        if 'url' in data:            
             url = data['url']
     
         species_name = bird_recognition.get_species(url)
