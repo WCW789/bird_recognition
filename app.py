@@ -1,24 +1,35 @@
-import random
+from flask import Flask, jsonify, request
 import bird_recognition
 import json
+import os
 
-
-from flask import Flask, jsonify, request
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
-
-bird_images = ['https://cdn.download.ams.birds.cornell.edu/api/v1/asset/215836881/1800', 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/263736021/1800', 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/297949771/1800', 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/115691751/1800', 'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/275462541/1800']
-url = random.choice(bird_images)
 
 
 @app.route('/')
 def hello_world():
     return 'Hello World!'
 
-@app.route('/bird')
+@app.route('/bird', methods=['POST'])
 def bird_images(): 
-    # if request.method == 'POST':
-    species_name = bird_recognition.get_species(url)
-    print(f'This is the species name! {species_name}')
-    return species_name
+    if request.method == 'POST':
+        data = request.get_json()
+
+        if 'url' in data and 'token' in data:
+            token = data['token']
+            if token != os.environ['TOKEN']:
+                return jsonify({'error': 'Invalid.'}), 400
+            
+            url = data['url']
+    
+        species_name = bird_recognition.get_species(url)
+        return f'This is a {species_name}'
+
+    else:
+        return jsonify({'error': 'Invalid request.'}), 400
+        
+
     
