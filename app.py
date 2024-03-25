@@ -19,7 +19,7 @@ def bird_images():
         data = request.get_json()
 
         if 'url' in data:            
-            url = data['url']
+            url = json.loads(data)['url']
     
         species_name = bird_recognition.get_species(url)
         return f'This is a {species_name}'
