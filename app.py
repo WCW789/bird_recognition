@@ -19,10 +19,10 @@ def bird_images():
         data = request.get_json()
 
         if 'url' in data:            
-            url = json.loads(data)['url']
+            url = data['url']
     
         species_name = bird_recognition.get_species(url)
-        return f'This is a {species_name}'
+        return f'{species_name}'
 
     else:
         return jsonify({'error': 'Invalid request.'}), 400
