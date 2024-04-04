@@ -17,9 +17,11 @@ def hello_world():
 def bird_images(): 
     if request.method == 'POST':
         data = request.get_json()
+        print(data)
 
         if 'url' in data:            
             url = data['url']
+            print(url)
     
         species_name = bird_recognition.get_species(url)
         return f'{species_name}'
