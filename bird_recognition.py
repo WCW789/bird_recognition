@@ -26,6 +26,8 @@ def get_species(url):
     img = cv2.resize(img, (224,224))
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
+    print("got modified img")
+
     model = MobileNetV3Large(weights='imagenet')
 
     input_img = image.img_to_array(img)
@@ -36,6 +38,8 @@ def get_species(url):
 
     # Get prediction
     top_prediction = tf.keras.applications.mobilenet_v3.decode_predictions(predict_img, top=1)
+    print(top_prediction)
+
     bird_name = top_prediction[0][0][1]
     print(f'Prediction: {bird_name}')
     return bird_name
