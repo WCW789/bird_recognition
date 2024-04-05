@@ -16,13 +16,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def get_species(url):
+    print("url in flask", url)
     r = requests.get(url)
+    print("rrrrr", r)
     working_dir=r'./'
     save_location=os.path.join(working_dir, os.environ['IMAGE_NAME'])
+    print("save_location", save_location)
     with open(save_location, 'wb') as f:
         f.write(r.content)
 
     img = cv2.imread(save_location)
+    print("img1", img)
     img = cv2.resize(img, (224,224))
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
