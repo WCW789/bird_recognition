@@ -48,10 +48,9 @@ def get_species(url):
     print(f'Prediction: {bird_name_top_prediction}')
 
     def convert_name(input_name):
-        edited_name = input_name.replace('_', ' ')
-        capitalized_name = edited_name.capitalize()
+        edited_name = input_name.replace('_', ' ').title()
 
-        return capitalized_name
+        return edited_name
     
     bird_name = convert_name(bird_name_top_prediction)
     return bird_name
