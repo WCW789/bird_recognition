@@ -44,6 +44,14 @@ def get_species(url):
     top_prediction = tf.keras.applications.mobilenet_v3.decode_predictions(predict_img, top=1)
     print(top_prediction)
 
-    bird_name = top_prediction[0][0][1]
-    print(f'Prediction: {bird_name}')
+    bird_name_top_prediction = top_prediction[0][0][1]
+    print(f'Prediction: {bird_name_top_prediction}')
+
+    def convert_name(input_name):
+        edited_name = input_name.replace('_', ' ')
+        capitalized_name = edited_name.capitalize()
+
+        return capitalized_name
+    
+    bird_name = convert_name(bird_name_top_prediction)
     return bird_name
